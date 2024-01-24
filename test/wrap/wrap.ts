@@ -1,6 +1,6 @@
-import { log } from "../config/log4js.config";
-import * as assert from "assert";
-import allureReporter from "@wdio/allure-reporter";
+import { log } from '../config/log4js.config';
+import * as assert from 'assert';
+import allureReporter from '@wdio/allure-reporter';
 
 const debug: any = (msg: string) => {
   return (
@@ -8,20 +8,18 @@ const debug: any = (msg: string) => {
     memberName: string,
     propertyDescriptor: PropertyDescriptor
   ) => {
-    return {
-      get() {
-        const wrapperFn = (...args: any[]) => {
-          log.info(msg);
-          propertyDescriptor.value.apply(this, args);
-        };
-        return wrapperFn;
-      },
+    const original = propertyDescriptor.value;
+    propertyDescriptor.value = function (...args) {
+      log.debug(msg);
+      return original.call(this, ...args);
     };
+
+    return propertyDescriptor;
   };
 };
 
-export class Test {
-  @debug("[[ Start test suite ]]")
+class Test {
+  @debug('[[ Start test suite ]]')
   spec(msg: string, executeBlock: any) {
     return describe(msg, () => {
       log.debug(`Start spec -> ${msg}`);
@@ -35,7 +33,7 @@ export class Test {
   case(msg: string, executeBlock: any) {
     return it(msg, () => {
       allureReporter.addStep(`|-[case]: ${msg}`);
-      allureReporter.addSeverity("minor");
+      allureReporter.addSeverity('minor');
       try {
         log.debug(`  Start case -> ${msg}`);
         return executeBlock();
@@ -67,7 +65,7 @@ export class Test {
       result = `[FAIL] - ${actual} !== ${expected}`;
     }
     const assertResultMsg = `      Assert_result [${msg}] - ${result}`;
-    if (result.includes("FAIL")) {
+    if (result.includes('FAIL')) {
       log.fatal(assertResultMsg);
     } else {
       log.debug(assertResultMsg);
@@ -76,3 +74,5 @@ export class Test {
     return assert.equal(actual, expected);
   }
 }
+
+export default new Test();
