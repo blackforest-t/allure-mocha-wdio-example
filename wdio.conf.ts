@@ -1,6 +1,6 @@
-import type { Options } from "@wdio/types";
-import { expect } from "expect-webdriverio";
-import { log } from "./test/config/log4js.config";
+import type { Options } from '@wdio/types';
+import { expect } from 'expect-webdriverio';
+import { log } from './test/config/log4js.config';
 
 export const config: Options.Testrunner = {
   //
@@ -8,13 +8,13 @@ export const config: Options.Testrunner = {
   // Runner Configuration
   // ====================
   // WebdriverIO supports running e2e tests as well as unit and component tests.
-  runner: "local",
+  runner: 'local',
   autoCompileOpts: {
     autoCompile: true,
     tsNodeOpts: {
-      project: "./tsconfig.json",
-      transpileOnly: true,
-    },
+      project: './tsconfig.json',
+      transpileOnly: true
+    }
   },
 
   //
@@ -33,13 +33,13 @@ export const config: Options.Testrunner = {
   // then the current working directory is where your `package.json` resides, so `wdio`
   // will be called from there.
   //
-  specs: ["./test/specs/**/*.ts"],
+  specs: ['./test/specs/**/*.ts'],
   // Patterns to exclude.
   exclude: [
     // 'path/to/excluded/files'
   ],
   suites: {
-    login: ["./test/specs/**/example.e2e.ts"],
+    login: ['./test/specs/**/example.e2e.ts']
   },
   //
   // ============
@@ -65,17 +65,23 @@ export const config: Options.Testrunner = {
   //
   capabilities: [
     {
-      browserName: "chrome",
+      browserName: 'chrome',
       acceptInsecureCerts: true,
-      "goog:chromeOptions": {
-        args: ["--headless"],
-      },
+      'goog:chromeOptions': {
+        args: []
+      }
     },
     {
-      browserName: "firefox",
+      browserName: 'firefox',
       acceptInsecureCerts: true,
-      "moz:firefoxOptions": { args: ["-private"] },
+      'moz:firefoxOptions': { args: ['-private'] }
     },
+    {
+      browserName: 'msedge',
+      'ms:edgeOptions': {
+        args: ['--headless']
+      }
+    }
   ],
   //
   // ===================
@@ -84,7 +90,7 @@ export const config: Options.Testrunner = {
   // Define all options that are relevant for the WebdriverIO instance here
   //
   // Level of logging verbosity: trace | debug | info | warn | error | silent
-  logLevel: "error",
+  logLevel: 'error',
   //
   // Set specific log levels per logger
   // loggers:
@@ -96,8 +102,8 @@ export const config: Options.Testrunner = {
   // - @wdio/cli, @wdio/config, @wdio/utils
   // Level of logging verbosity: trace | debug | info | warn | error | silent
   logLevels: {
-    webdriver: "silent",
-    geckodriver: "silent",
+    webdriver: 'silent',
+    geckodriver: 'silent'
   },
   //
   // If you only want to run your tests until a specific amount of tests have failed use
@@ -108,7 +114,7 @@ export const config: Options.Testrunner = {
   // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
   // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
   // gets prepended directly.
-  baseUrl: "http://localhost",
+  baseUrl: 'http://localhost',
   //
   // Default timeout for all waitFor* commands.
   waitforTimeout: 10000,
@@ -124,7 +130,7 @@ export const config: Options.Testrunner = {
   // Services take over a specific job you don't want to take care of. They enhance
   // your test setup with almost no effort. Unlike plugins, they don't add new
   // commands. Instead, they hook themselves up into the test process.
-  services: ["chromedriver", "geckodriver"],
+  //services: ["chromedriver", "geckodriver"],
 
   // Framework you want to run your specs with.
   // The following are supported: Mocha, Jasmine, and Cucumber
@@ -132,7 +138,7 @@ export const config: Options.Testrunner = {
   //
   // Make sure you have the wdio adapter package for the specific framework installed
   // before running any tests.
-  framework: "mocha",
+  framework: 'mocha',
   //
   // The number of times to retry the entire specfile when it fails as a whole
   // specFileRetries: 1,
@@ -148,20 +154,20 @@ export const config: Options.Testrunner = {
   // see also: https://webdriver.io/docs/dot-reporter
   reporters: [
     [
-      "allure",
+      'allure',
       {
-        outputDir: "allure-results",
+        outputDir: 'allure-results',
         disableWebdriverStepsReporting: true,
-        disableWebdriverScreenshotsReporting: true,
-      },
-    ],
+        disableWebdriverScreenshotsReporting: true
+      }
+    ]
   ],
 
   //
   // Options to be passed to Mocha.
   // See the full list at http://mochajs.org/
   mochaOpts: {
-    timeout: 60000,
+    timeout: 60000
   },
   //
   // =====
@@ -278,7 +284,7 @@ export const config: Options.Testrunner = {
    */
   afterSuite: function (suite) {
     log.info(`End suite -> ${suite.title}`);
-  },
+  }
   /**
    * Runs after a WebdriverIO command gets executed
    * @param {String} commandName hook command name
